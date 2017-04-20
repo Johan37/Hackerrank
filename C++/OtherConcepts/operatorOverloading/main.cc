@@ -1,61 +1,60 @@
-#include<iostream>
-
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
 using namespace std;
 
-class Complex
-{
-public:
-    int a,b;
-    void input(string s)
-    {
-        int v1=0;
-        int i=0;
-        while(s[i]!='+')
-        {
-            v1=v1*10+s[i]-'0';
-            i++;
-        }
-        while(s[i]==' ' || s[i]=='+'||s[i]=='i')
-        {
-            i++;
-        }
-        int v2=0;
-        while(i<s.length())
-        {
-            v2=v2*10+s[i]-'0';
-            i++;
-        }
-        a=v1;
-        b=v2;
-    }
+class Matrix {
+  public:
+    vector<vector<int>> a;
 };
 
-//Overload operators + and << for the class complex
-//+ should add two complex numbers as (a+ib) + (c+id) = (a+c) + i(b+d)
-//<< should print a complex number in the format "a+ib"
-
-Complex operator+(const Complex& left, const Complex& right) {
-    Complex ret;
-    ret.a = left.a + right.a;
-    ret.b = left.b + right.b;
+Matrix operator+(const Matrix& left, const Matrix& right) {
+    Matrix ret;
+    ret.a = vector<vector<int>>(left.a.size(), vector<int>(left.a[0].size()));
+    for (int row = 0; row < left.a.size(); row++){
+      for (int col = 0; col < left.a[row].size(); col++ ) {
+        ret.a[row][col] = right.a[row][col] + left.a[row][col];
+      }
+    }
     return ret;
 }
 
-std::ostream& operator<<(std::ostream& os, const Complex& obj)
-{
-    // write obj to stream
-    os << obj.a << "+i"<< obj.b;
-    return os;
-}
-
-int main()
-{
-    Complex x,y;
-    string s1,s2;
-    cin>>s1;
-    cin>>s2;
-    x.input(s1);
-    y.input(s2);
-    Complex z=x+y;
-    cout<<z<<endl;
+int main () {
+   int cases,k;
+   cin >> cases;
+   for(k=0;k<cases;k++) {
+      Matrix x;
+      Matrix y;
+      Matrix result;
+      int n,m,i,j;
+      cin >> n >> m;
+      for(i=0;i<n;i++) {
+         vector<int> b;
+         int num;
+         for(j=0;j<m;j++) {
+            cin >> num;
+            b.push_back(num);
+         }
+         x.a.push_back(b);
+      }
+      for(i=0;i<n;i++) {
+         vector<int> b;
+         int num;
+         for(j=0;j<m;j++) {
+            cin >> num;
+            b.push_back(num);
+         }
+         y.a.push_back(b);
+      }
+      result = x+y;
+      for(i=0;i<n;i++) {
+         for(j=0;j<m;j++) {
+            cout << result.a[i][j] << " ";
+         }
+         cout << endl;
+      }
+   }  
+   return 0;
 }
