@@ -15,12 +15,20 @@ Node* InsertNth(Node *head, int data, int position)
     insert_node->data = data;
 
     if (head == NULL) {
-        head = insert_node;
+        return insert_node;
     }
 
-    int current_pos = 0;
+    if(position == 0) {
+        insert_node->next = head;
+        return insert_node;
+    }
+
+    int current_pos = 1;
     Node* current_node = head;
-    while (current_pos < position -1 && current_node != NULL) {
+    while (current_pos < position) {
+        if (current_node->next == NULL) {
+            break;
+        }
         current_node = current_node->next;
         current_pos++;
     }
@@ -29,4 +37,5 @@ Node* InsertNth(Node *head, int data, int position)
     current_node->next = insert_node;
 
     return head;
+
 }
